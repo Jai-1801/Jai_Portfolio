@@ -24,11 +24,12 @@ html,body{
     width: 100vw;
     background-color: #f1f1f1;
 }
-#page2{
+#page2 {
     position: relative;
     height: 100vh;
     width: 100vw;
     background-color: #f1f1f1;
+    z-index: 50;
 }
 #page3{
     position: relative;
@@ -36,11 +37,12 @@ html,body{
     width: 100vw;
     background-color: #f1f1f1;
 }
-canvas{
-    position: relative;
-    z-index: 9;
+canvas {
+    position: absolute;
+    z-index: 999;
     max-width: 100vw;
     max-height: 100vh;
+    pointer-events: none;
 }
 #loop{
     display: flex;
@@ -87,12 +89,17 @@ canvas{
     font-weight: 400;
     font-size: 22px;
 }
-#nav>button{
+#nav .nav-buttons-container .nav-btn {
     padding: 10px 20px;
     border-radius: 50px;
     background-color: #000;
     color: #fff;
     border: none;
+    cursor: pointer;
+    font-family: gilroy;
+    text-decoration: none; 
+    font-size: 14px; 
+    display: inline-block; 
 }
 #page>h3{
     position: absolute;
@@ -112,7 +119,7 @@ canvas{
 #page1>#right-text{
     position: absolute;
     top: 30%;
-    left: 10%;
+    left: 6%;
 }
 #page1>#right-text>h3{
     font-weight: 400;
@@ -125,7 +132,7 @@ canvas{
 #page1>#left-text{
     position: absolute;
     top: 50%;
-    right: 10%;
+    right: 5%;
     text-align: end;
 }
 #page1>#left-text>h1{
@@ -152,7 +159,7 @@ canvas{
 #page2>#text2{
     position: absolute;
     top: 55%;
-    right: 10%;
+    right: 3%;
     text-align: end;
 }
 #page2>#text2>p{
@@ -162,7 +169,7 @@ canvas{
 #page3>#text3{
     position: absolute;
     top: 40%;
-    right: 10%;
+    right: 5%;
     text-align: end;
 }
 #page3>#text3>h3{
@@ -172,4 +179,261 @@ canvas{
 #page3>#text3>h1{
     font-size: 70px;
 
+}
+#contactCard{
+    position: fixed;
+    top: 55%;
+    left: 6%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.96);
+    border-radius: 16px;
+    padding: 22px 22px 18px 22px;
+    width: 380px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+    z-index: 1000001;
+    backdrop-filter: blur(2px);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .25s ease;
+}
+#contactCard.is-visible{
+    opacity: 1;
+    pointer-events: auto;
+}
+#contactCard h4{
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+.contact-subtitle{
+    color: #7c7c7c;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+.form-field{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.form-field label{
+    font-size: 12px;
+    color: #4a4a4a;
+    margin-bottom: 6px;
+}
+.form-field input,
+.form-field textarea{
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-family: gilroy;
+    background: #fff;
+    outline: none;
+}
+.form-field input:focus,
+.form-field textarea:focus{
+    border-color: #000;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
+}
+.field-error{
+    color: #b00020;
+    font-size: 11px;
+    min-height: 14px;
+    margin-top: 4px;
+}
+.contact-submit{
+    margin-top: 6px;
+    font-size: 14px;
+    padding: 10px 16px;
+}
+.contact-submit .spinner{
+    display: none;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #ffffff;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin-right: 8px;
+    vertical-align: -2px;
+}
+.contact-submit.is-loading .spinner{
+    display: inline-block;
+}
+.contact-submit[disabled]{
+    opacity: .75;
+    cursor: not-allowed;
+}
+@keyframes spin{
+    from{ transform: rotate(0deg); }
+    to{ transform: rotate(360deg); }
+}
+.contact-status{
+    font-size: 12px;
+    margin-top: 10px;
+}
+@media (max-width: 900px){
+    #contactCard{
+        position: fixed;
+        left: 50%;
+        top: auto;
+        bottom: 16px;
+        transform: translateX(-50%);
+        width: calc(100% - 32px);
+        z-index: 100002;
+    }
+}
+#openProjects {
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-family: gilroy;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-block;
+    position: relative;
+    z-index: 100000; /* above canvas (999) but below popup (100001) */
+    pointer-events: auto;
+}
+
+#projectsPopup {
+    position: fixed;
+    top: 45%;
+    right: 6%;
+    left: auto;
+    transform: translateY(-50%);
+    z-index: 1000002; /* above button and model/canvas */
+    background: rgba(255, 255, 255, 0.98);
+    padding: 30px 40px;
+    border-radius: 20px;
+    display: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 500px;
+    pointer-events: auto; /* ensure popup remains clickable */
+}
+
+#projectsPopup h4 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.projects-col ul {
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.projects-subtitle {
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    color: #7c7c7c;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.projects-divider {
+    width: 2px;
+    background: rgba(0,0,0,0.1);
+    height: 100%;
+    border-radius: 2px;
+}
+
+/* Genie mapping row */
+.genie-mapping {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.genie-label {
+    font-weight: 600;
+}
+.genie-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+.genie-connector {
+    display: inline-block;
+    width: 2px;
+    height: 26px;
+    background: rgba(0,0,0,0.25);
+}
+
+#projectsPopup ul {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+#projectsPopup ul li {
+    margin: 15px 0;
+}
+
+#projectsPopup ul li a {
+    color: #000;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+#projectsPopup ul li a:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+#projectsPopup button {
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-family: gilroy;
+    margin-top: 15px;
+}
+
+canvas {
+    pointer-events: none;
+}
+
+/* Visible focus styles for keyboard users */
+#openProjects:focus-visible,
+#projectsPopup button:focus-visible,
+#projectsPopup a:focus-visible {
+    outline: 3px solid #00aaff;
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+/* Allow clicks to pass through ScrollTrigger's pin wrapper over the canvas */
+.pin-spacer {
+    pointer-events: none !important;
+}
+
+/* Responsive: center popup on smaller screens */
+@media (max-width: 900px) {
+    #projectsPopup {
+        left: 50%;
+        right: auto;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 92%;
+        max-width: 520px;
+    }
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .projects-divider {
+        display: none;
+    }
 }
